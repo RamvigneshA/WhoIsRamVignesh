@@ -1,0 +1,99 @@
+.premium-section.about-section {
+  background: radial-gradient(circle at 25% 50%, #1a1a1a 0%, #000000 100%);
+  height: 100vh; /* Force fixed height to enable internal scroll */
+  display: block; /* Override flex to allow natural scroll flow */
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+  
+  /* Hide scrollbar for cleaner UI */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.about-section::-webkit-scrollbar {
+  display: none;
+}
+
+/* Spacer to create scroll length */
+.scroll-track {
+  height: 400vh;
+  width: 100%;
+  pointer-events: none;
+}
+
+.section-face-img,
+.section-helmet-img {
+  position: fixed;
+  height: 100vh;
+  right: -1%;
+  top: 0;
+  z-index: 1;
+  will-change: transform, opacity;
+  object-fit: cover;
+  
+  /* Premium Visual Grading */
+  filter: contrast(1.1) brightness(0.85);
+  
+  /* Gradient Fade Mask */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
+  
+  pointer-events: none;
+}
+
+.section-face-img {
+  animation: 
+    faceEntrance 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-helmet-img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.section-tagline.large-tagline {
+  position: fixed;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  z-index: 2;
+  opacity: 0;
+  height: 300px;
+  width: auto;
+  min-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  animation: taglineEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
+  pointer-events: none; /* Allow scroll through text */
+}
+
+.premium-back-btn.minimalist-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 10;
+}
+
+/* Animations */
+@keyframes faceEntrance {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes taglineEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
