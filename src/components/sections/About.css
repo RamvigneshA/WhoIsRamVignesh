@@ -35,20 +35,21 @@
   /* Premium Visual Grading */
   filter: contrast(1.1) brightness(0.85);
   
-  /* Gradient Fade Mask */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
-  
   pointer-events: none;
 }
 
 .section-face-img {
+  /* Gradient Fade Mask only for the base face */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
+  
   animation: 
     faceEntrance 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .section-helmet-img {
-  transition: opacity 0.3s ease-in-out;
+  /* No fade mask for helmet to ensure it is fully opaque over the face */
+  transition: none; /* Instant appearance */
 }
 
 .section-tagline.large-tagline {
