@@ -37,7 +37,9 @@
   
   pointer-events: none;
 }
-
+.section-face-img{
+    height: 99vh;
+}
 .section-face-img {
   /* Gradient Fade Mask only for the base face */
   -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 35%);
@@ -48,9 +50,23 @@
 }
 
 .section-helmet-img {
-  /* No fade mask for helmet to ensure it is fully opaque over the face */
-  transition: none; /* Instant appearance */
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
 }
+
+.section-helmet-img.active {
+  opacity: 1;
+  transform: translate(0, 0) !important;
+}
+
+/* Directional Assembly Offsets */
+.helmet-piece-0 { transform: translateY(-50px); } /* Helmet 1: from top */
+.helmet-piece-1 { transform: translateX(-50px); } /* 2: from left to right */
+.helmet-piece-2 { transform: translateX(-50px); } /* 3: from left to right */
+.helmet-piece-3 { transform: translateY(50px); }  /* 4: from bottom to up */
+.helmet-piece-4 { transform: translateY(50px); }  /* 5: from bottom to up */
+.helmet-piece-5 { transform: translateY(-50px); } /* 6: top to bottom */
+/* 7: subtle entrance */
 
 .section-tagline.large-tagline {
   position: fixed;

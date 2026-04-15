@@ -76,9 +76,8 @@ const About = ({ onBack }) => {
             key={index}
             src={src} 
             alt={`Helmet Frame ${index + 1}`} 
-            className="section-helmet-img" 
+            className={`section-helmet-img helmet-piece-${index} ${frame >= index ? 'active' : ''}`} 
             style={{ 
-              opacity: frame >= index ? 1 : 0,
               zIndex: 1 + index 
             }}
           />
