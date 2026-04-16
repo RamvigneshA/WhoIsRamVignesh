@@ -31,13 +31,13 @@ const stoneImages = [bStone, gStone, rStone, oStone, pStone, yStone, bStone]; //
 const snapFrames = [s1, s2, s3, s4, s5, s6];
 
 const scenes = [
-  "After Mechatronics straight to the floor.\nAssembly line. Same loop.\nNo comfort. Only constraints.\n working with scraps",
-  "Something felt off.\nSame system.No change.\nThen my brother stepped in.\nA senior in product.\nA real-world thinker.\nHe showed me another path into development.",
-  "I found the web.\nNot machines but interfaces.\nNot parts but interactions.",
-  "I built. I broke.I rebuilt.\nAgain and again.\nUntil I saw beyond code.\nPerformance ,Systems ,Bussiness value.",
-  "From systems to scale.\nFrom code to control.\nFrom building to shaping experience.",
-  "Not just building.\nNot just coding.\nNow… creating impact.",
-  "This is my world now.\nI build experiences.",
+  "After *Mechatronics* straight to the floor.\n*Assembly line*. Same loop.\nNo comfort. Only constraints.\n*Working with scraps*.",
+  "*Something felt off*.\nSame system. No change.\nThen my *brother* stepped in.\nA senior in product.\n*A real-world thinker.*\nHe *showed* me another path into *development*.",
+  "I *found* the *web*.\nNot machines but *interfaces*.\nNot parts but *interactions*.",
+  "I *built*. I *broke*. I *rebuilt*.\nAgain and again.\nUntil I saw beyond code.\n*Performance*, *Systems*, *Business value*.",
+  "From *systems to scale*.\nFrom code to control.\nFrom building to *shaping experience*.",
+  "*Not just building.*\nNot just coding.\nNow… *creating impact.*",
+  "This is *my world* now.\nI *build experiences*.",
   "" // Hidden 8th scene for scroll-triggered snap
 ];
 
@@ -212,7 +212,18 @@ const About = ({ onBack }) => {
           <div key={index} className={`about-scene scene-${index + 1}`}>
             <div className="scene-content">
               {text.split('\n').map((line, i) => (
-                <h2 key={i} className="scene-text-line">{line}</h2>
+                <h2 key={i} className="scene-text-line">
+                  {line.split(/(\*.*?\*)/g).map((part, index) => {
+                    if (part.startsWith('*') && part.endsWith('*')) {
+                      return (
+                        <span key={index} className="pop-out">
+                          {part.slice(1, -1)}
+                        </span>
+                      );
+                    }
+                    return part;
+                  })}
+                </h2>
               ))}
             </div>
           </div>
