@@ -12,6 +12,16 @@ import './About.css';
 
 const helmetImages = [h1, h2, h3, h4, h5, h6, h7];
 
+const scenes = [
+  "Not in a lab.\nNot with perfect tools.\nAfter Mechatronics Engineering,\nI stepped into production.\nOn the factory floor.\nOn a production line.\nBuilding machines one part at a time.\nSame motion.Same sequence.\nWorking with scraps.",
+  "Something didn’t feel right.\nSame system.\nNo change.\nThen my brother stepped in.\nA senior in product.\nA real-world thinker.\nHe showed me another path into development.",
+  "I found the web.\nNot machines but interfaces.\nNot parts but interactions.",
+  "I built. I broke.\nI rebuilt.\nAgain. And again. Until I saw beyond code.\nPerformance.\nSystems.\nExperience.",
+  "From machines\nto interfaces.\nFrom assembly\nto interaction.\nFrom code\nto experience.",
+  "I stopped thinking in code.\nAnd started thinking in experience.",
+  "This is my world now.\nWhere code meets feeling.\nI build experiences."
+];
+
 const About = ({ onBack }) => {
   const [frame, setFrame] = useState(-1);
   const sectionRef = useRef(null);
@@ -62,8 +72,6 @@ const About = ({ onBack }) => {
 
   return (
     <section ref={sectionRef} className="premium-section about-section">
-      <div className="scroll-track"></div>
-      
       <img 
         src={faceImg} 
         alt="Portrait" 
@@ -84,19 +92,16 @@ const About = ({ onBack }) => {
         ))}
       </div>
 
-      <div className="section-tagline large-tagline animated-tagline">
-        <TextPressure
-          text="WHO IS THIS GUY?"
-          flex
-          alpha={false}
-          stroke={false}
-          width
-          weight
-          italic
-          textColor="#ffffff"
-          strokeColor="#5227FF"
-          minFontSize={36}
-        />
+      <div className="scenes-container">
+        {scenes.map((text, index) => (
+          <div key={index} className={`about-scene scene-${index + 1}`}>
+            <div className="scene-content">
+              {text.split('\n').map((line, i) => (
+                <h2 key={i} className="scene-text-line">{line}</h2>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       <button className="premium-back-btn minimalist-btn" onClick={onBack}>

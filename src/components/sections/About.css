@@ -15,11 +15,38 @@
   display: none;
 }
 
-/* Spacer to create scroll length */
-.scroll-track {
-  height: 400vh;
-  width: 100%;
+/* Scenes container for scrolling content */
+.scenes-container {
+  position: relative;
+  z-index: 20;
   pointer-events: none;
+}
+
+.about-scene {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8%;
+}
+
+.scene-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 80%;
+}
+
+.scene-text-line {
+  font-size: 3.5rem;
+  color: #ffffff;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  margin: 0;
+  opacity: 0.95;
 }
 
 .section-face-img,
@@ -68,12 +95,7 @@
 .helmet-piece-5 { transform: translateY(-50px); } /* 6: top to bottom */
 /* 7: subtle entrance */
 
-.section-tagline.large-tagline {
-  position: fixed;
-  top: 50%;
-  left: 5%;
-  transform: translateY(-50%);
-  z-index: 2;
+.section-tagline {
   opacity: 0;
   height: 300px;
   width: auto;
@@ -82,7 +104,6 @@
   align-items: center;
   justify-content: flex-start;
   animation: taglineEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
-  pointer-events: none; /* Allow scroll through text */
 }
 
 .premium-back-btn.minimalist-btn {
@@ -112,5 +133,51 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .about-scene {
+    justify-content: center;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .scene-content {
+    align-items: center;
+    max-width: 90%;
+  }
+
+  .scene-text-line {
+    font-size: 2.5rem;
+  }
+
+  .section-tagline {
+    min-width: unset;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .scene-text-line {
+    font-size: 2rem;
+  }
+  
+  .section-face-img,
+  .section-helmet-img {
+    right: -20%;
+  }
+}
+
+@media (max-width: 480px) {
+  .scene-text-line {
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+  }
+  
+  .section-tagline {
+    padding: 0 1.5rem;
   }
 }

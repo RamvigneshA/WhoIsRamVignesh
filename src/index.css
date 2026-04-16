@@ -301,7 +301,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgb(179, 255, 158) 50%, rgb(255, 255, 255) 50%);
+  background:black;
   z-index: 10;
   animation: hideIntro 0.5s ease forwards;
   animation-delay: 3s;
