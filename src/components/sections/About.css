@@ -15,6 +15,74 @@
   display: none;
 }
 
+/* Timeline vertical navigation */
+.timeline-container {
+  position: fixed;
+  left: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  z-index: 100;
+  height: 80vh;
+  justify-content: space-between;
+}
+
+.timeline-line {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.2) 80%, transparent);
+  z-index: -1;
+}
+
+.timeline-node {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+  position: relative;
+  outline: none;
+}
+
+.node-stone-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  opacity: 0.3;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(0.5) brightness(0.8);
+}
+
+.timeline-node.active .node-stone-img {
+  opacity: 1;
+  transform: scale(1.8);
+  filter: grayscale(0) brightness(1.2);
+}
+
+/* Crystal Glow Effects for Stone Images */
+.crystal-node-0.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #00d2ff) drop-shadow(0 0 15px rgba(0, 210, 255, 0.8)); }
+.crystal-node-1.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #00ff87) drop-shadow(0 0 15px rgba(0, 255, 135, 0.8)); }
+.crystal-node-2.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #ff0055) drop-shadow(0 0 15px rgba(255, 0, 85, 0.8)); }
+.crystal-node-3.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #ff9d00) drop-shadow(0 0 15px rgba(255, 157, 0, 0.8)); }
+.crystal-node-4.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #bd00ff) drop-shadow(0 0 15px rgba(189, 0, 255, 0.8)); }
+.crystal-node-5.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #f3e500) drop-shadow(0 0 15px rgba(243, 229, 0, 0.8)); }
+.crystal-node-6.active .node-stone-img { filter: grayscale(0) brightness(1.3) drop-shadow(0 0 5px #00d2ff) drop-shadow(0 0 15px rgba(0, 210, 255, 0.8)); }
+
+.timeline-node:hover .node-stone-img {
+  opacity: 0.8;
+  transform: scale(1.3);
+  filter: grayscale(0.2) brightness(1);
+}
+
 /* Scenes container for scrolling content */
 .scenes-container {
   position: relative;
@@ -27,26 +95,33 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 8%;
+  padding-left: 12%;
 }
 
 .scene-content {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
   max-width: 80%;
+  pointer-events: auto;
 }
 
 .scene-text-line {
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   color: #ffffff;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.08em;
   line-height: 1.1;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
   margin: 0;
-  opacity: 0.95;
+  opacity: 0;
+  transform: translateY(20px);
+  text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  font-family: ui-monospace, Consolas, 'SF Mono', 'Roboto Mono', monospace;
+  
+  /* Staggered entrance animation */
+  animation: fadeInUpStory 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--delay);
 }
 
 .section-face-img,
@@ -93,18 +168,6 @@
 .helmet-piece-3 { transform: translateY(50px); }  /* 4: from bottom to up */
 .helmet-piece-4 { transform: translateY(50px); }  /* 5: from bottom to up */
 .helmet-piece-5 { transform: translateY(-50px); } /* 6: top to bottom */
-/* 7: subtle entrance */
-
-.section-tagline {
-  opacity: 0;
-  height: 300px;
-  width: auto;
-  min-width: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  animation: taglineEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
-}
 
 .premium-back-btn.minimalist-btn {
   position: fixed;
@@ -125,19 +188,13 @@
   }
 }
 
-@keyframes taglineEntrance {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Mobile Responsiveness */
 @media (max-width: 1024px) {
+  .timeline-container {
+    left: 2rem;
+    gap: 2rem;
+  }
+
   .about-scene {
     justify-content: center;
     padding-left: 0;
@@ -150,19 +207,17 @@
   }
 
   .scene-text-line {
-    font-size: 2.5rem;
-  }
-
-  .section-tagline {
-    min-width: unset;
-    width: 100%;
-    justify-content: center;
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 768px) {
+  .timeline-container {
+    left: 1.5rem;
+  }
+
   .scene-text-line {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .section-face-img,
@@ -172,12 +227,140 @@
 }
 
 @media (max-width: 480px) {
+  .timeline-container {
+    left: 1rem;
+    gap: 1.5rem;
+  }
+
   .scene-text-line {
     font-size: 1.4rem;
     letter-spacing: -0.01em;
   }
-  
-  .section-tagline {
-    padding: 0 1.5rem;
+}
+
+/* Cinematic Snap Interaction Styles */
+.snap-animation-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end; /* Stick to bottom */
+  justify-content: center;
+  z-index: 500;
+  pointer-events: none;
+  background: transparent;
+  backdrop-filter: none;
+  transition: backdrop-filter 0.5s ease, background 0.5s ease;
+}
+
+.snap-animation-overlay.stage-snapping {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.snap-frame-img {
+  width: auto;
+  height: 85vh; /* Slightly taller to ensure it feels anchored at bottom */
+  max-width: 90vw;
+  object-fit: contain;
+  filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.15));
+  will-change: transform, opacity;
+  transition: filter 0.3s ease;
+}
+
+.snap-frame-img.snapping {
+  filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.3)) brightness(1.2);
+}
+
+.flash-whiteout {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 999;
+  animation: whiteoutFlash 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes whiteoutFlash {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes handRise {
+  from {
+    transform: translateY(100vh) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUpStory {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cinematic Word Reveal Styles */
+.snap-reveal-text-container {
+  position: absolute;
+  top: 35%; 
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 550;
+  pointer-events: none;
+}
+
+.snap-reveal-text {
+  font-size: 10rem;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  animation: textImpact 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  font-family: ui-monospace, Consolas, 'SF Mono', 'Roboto Mono', monospace;
+}
+
+.snap-reveal-text.developer {
+  font-size: 12rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(to bottom, #ffffff, #888888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+}
+
+@keyframes textImpact {
+  0% {
+    opacity: 0;
+    transform: scale(2);
+    filter: blur(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .snap-reveal-text {
+    font-size: 15vw;
+    letter-spacing: 0.1em;
+  }
+  .snap-reveal-text.developer {
+    font-size: 11vw;
+    letter-spacing: 0.02em;
   }
 }
