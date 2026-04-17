@@ -283,7 +283,7 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
 
       <div className="contact-page">
         <div className="contact-intro">
-          <div className="contact-lbl">04 / Contact</div>
+          <div className="contact-lbl">Lets Connect</div>
           <h1 className="contact-title">Let's make<br />something<br /><em>remarkable.</em></h1>
           <p className="contact-copy">Open to freelance, full-time roles, and collabs. Four ways to reach me — pick the one that suits you.</p>
           <div className="contact-hint">Hover the cards <span className="hint-arr">→</span></div>
@@ -300,14 +300,14 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
                 <div className="f-foot">
                   <div className="f-sub">Email</div>
                   <div className="f-btn">
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#6b5e50" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" /></svg>
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#2a8a12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" /></svg>
                   </div>
                 </div>
               </div>
               <div className="contact-face contact-back">
                 <div className="b-eye">Email me directly</div>
                 <div className="b-icon">
-                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#c9a96e" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#39ff14" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="5" width="17" height="12" rx="2.5" />
                     <path d="M2 8l8.5 5.5L19 8" />
                   </svg>
@@ -329,20 +329,25 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
                 <div className="f-foot">
                   <div className="f-sub">WhatsApp</div>
                   <div className="f-btn">
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#6b5e50" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" /></svg>
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#2a8a12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" /></svg>
                   </div>
                 </div>
               </div>
               <div className="contact-face contact-back">
                 <div className="b-eye">Message me on WhatsApp</div>
                 <div className="b-icon">
-                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#c9a96e" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#39ff14" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M10.5 2.5a8 8 0 00-7 12.1L2.5 18.5l4.1-1A8 8 0 1010.5 2.5z" />
                     <path d="M7.8 9.2c0 .5.2 1 .4 1.4.4.7.9 1.2 1.6 1.5.4.2.8.2 1.1 0l.3-.4c.1-.2 0-.4-.1-.5l-.7-.6c-.1-.1-.3-.1-.4 0l-.2.2c-.1.1-.2.1-.4 0-.3-.2-.6-.5-.8-.8-.1-.1-.1-.3 0-.4l.2-.2c.1-.1.1-.3 0-.4l-.7-.7c-.1-.1-.3-.1-.5 0l-.4.3c-.3.3-.4.7-.4 1.1z" />
                   </svg>
                 </div>
-                <div className="b-val">+91 98765 43210</div>
-                <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="b-cta">
+                <div className="b-val">+91 7338971709</div>
+                <a
+                  href="https://wa.me/917338971709?text=Hi%20Ram%20Vignesh%2C%20I%20saw%20your%20portfolio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="b-cta"
+                >
                   Open chat
                   <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M1 4.5h7M4.5 1l3.5 3.5L4.5 8" /></svg>
                 </a>
@@ -358,14 +363,14 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
                 <div className="f-foot">
                   <div className="f-sub">LinkedIn</div>
                   <div className="f-btn">
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#6b5e50" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" /></svg>
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#2a8a12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" /></svg>
                   </div>
                 </div>
               </div>
               <div className="contact-face contact-back">
                 <div className="b-eye">Connect on LinkedIn</div>
                 <div className="b-icon">
-                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#c9a96e" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#39ff14" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="17" height="17" rx="3" />
                     <path d="M6.5 9.5v5M6.5 7v.01M10.5 14.5v-3a2 2 0 014 0v3M10.5 9.5v5" />
                   </svg>
@@ -387,41 +392,41 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
                 <div className="f-foot">
                   <div className="f-sub">Download PDF</div>
                   <div className="f-btn">
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#6b5e50" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 1.5v7M3.5 6l3 3 3-3M2 11h9" /></svg>
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#2a8a12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 1.5v7M3.5 6l3 3 3-3M2 11h9" /></svg>
                   </div>
                 </div>
               </div>
               <div className="contact-face resume-back">
                 <div className="res-top">
-                  <div className="res-avatar">YN</div>
+                  <div className="res-avatar">RV</div>
                   <div>
-                    <div className="res-name">Your Name</div>
-                    <div className="res-role">UI Dev & Designer</div>
+                    <div className="res-name">Ram Vignesh</div>
+                    <div className="res-role">React Developer</div>
                   </div>
                 </div>
                 <div className="res-stats">
                   <div className="res-stat">
-                    <div className="res-stat-n">5+</div>
+                    <div className="res-stat-n">3+</div>
                     <div className="res-stat-l">Years</div>
                   </div>
                   <div className="res-stat">
-                    <div className="res-stat-n">30+</div>
+                    <div className="res-stat-n">17+</div>
                     <div className="res-stat-l">Projects</div>
                   </div>
                   <div className="res-stat">
-                    <div className="res-stat-n">12+</div>
+                    <div className="res-stat-n">2</div>
                     <div className="res-stat-l">Clients</div>
                   </div>
                 </div>
                 <div className="res-skills">
                   <span className="res-sk">React</span>
-                  <span className="res-sk">Figma</span>
+                  <span className="res-sk">Next.js</span>
                   <span className="res-sk">GSAP</span>
                   <span className="res-sk">Node.js</span>
-                  <span className="res-sk">Three.js</span>
+                  <span className="res-sk">TypeScript</span>
                 </div>
                 <a href="resume.pdf" download="YourName_Resume.pdf" className="res-dl">
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#1a1410" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 1.5v7M3.5 6l3 3 3-3M2 11h9" /></svg>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#080c08" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 1.5v7M3.5 6l3 3 3-3M2 11h9" /></svg>
                   Download Résumé
                 </a>
                 <div className="res-bot">

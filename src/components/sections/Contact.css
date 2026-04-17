@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@300;400;500&display=swap');
 
 .contact-remarkable {
-  --bg: #0d0b09;
-  --gold: #c9a96e;
-  --gold-dim: #5a4a30;
-  --cream: #f4ede0;
-  --text: #e8dfd2;
-  --muted: #4e4438;
-  --c-front: #f4ede0;
-  --c-dark: #181410;
+  --bg: #080c08;
+  --neon: #39ff14;
+  --neon-dim: #1a5c0e;
+  --cream: #e0f0e0;
+  --text: #c8e6c8;
+  --muted: #2e4a2e;
+  --c-front: #0e1a0e;
+  --c-dark: #0a120a;
 
   background: var(--bg);
   min-height: 100vh;
@@ -37,7 +37,8 @@
 .ring {
   position: absolute;
   border-radius: 50%;
-  border: 0.5px solid rgba(201, 169, 110, 0.07);
+  border: 0.5px solid rgba(57, 255, 20, 0.1);
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.03);
   pointer-events: none;
 }
 
@@ -45,7 +46,8 @@
   position: fixed;
   width: 8px;
   height: 8px;
-  background: var(--gold);
+  background: var(--neon);
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -57,7 +59,8 @@
   width: 32px;
   height: 32px;
   background: transparent;
-  border: 0.5px solid var(--gold);
+  border: 0.5px solid var(--neon);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
 }
 
 /* Layout */
@@ -82,7 +85,7 @@
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--neon);
   margin-bottom: 28px;
   display: flex;
   align-items: center;
@@ -95,7 +98,7 @@
   content: '';
   width: 28px;
   height: 0.5px;
-  background: var(--gold);
+  background: var(--neon);
   display: block;
 }
 
@@ -113,7 +116,8 @@
 
 .contact-title em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--neon);
+  text-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
 }
 
 .contact-copy {
@@ -194,6 +198,7 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   overflow: hidden;
+  border: 1px solid rgba(57, 255, 20, 0.12);
 }
 
 /* Front face */
@@ -204,6 +209,7 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.06);
 }
 
 .contact-front::after {
@@ -213,27 +219,27 @@
   right: 0;
   width: 110px;
   height: 110px;
-  background: linear-gradient(135deg, transparent 50%, rgba(201, 169, 110, 0.09) 50%);
+  background: linear-gradient(135deg, transparent 50%, rgba(57, 255, 20, 0.06) 50%);
   pointer-events: none;
 }
 
 /* Resume card front — subtle diagonal texture */
 .contact-card[data-type="resume"] .contact-front {
-  background: #f0e8d8;
+  background: #0c180c;
 }
 
 .contact-card[data-type="resume"] .contact-front::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(201, 169, 110, 0.04) 18px, rgba(201, 169, 110, 0.04) 19px);
+  background: repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(57, 255, 20, 0.03) 18px, rgba(57, 255, 20, 0.03) 19px);
   pointer-events: none;
 }
 
 .f-num {
   font-size: 10px;
   letter-spacing: 0.2em;
-  color: #a89888;
+  color: #4a7a4a;
   font-weight: 300;
 }
 
@@ -241,7 +247,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 42px;
   font-weight: 300;
-  color: #1a1410;
+  color: #c8e6c8;
   line-height: 1.0;
   letter-spacing: -0.02em;
 }
@@ -250,7 +256,8 @@
   font-style: italic;
   display: block;
   font-size: 28px;
-  color: #6b5e50;
+  color: var(--neon);
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
 }
 
 .f-foot {
@@ -263,14 +270,14 @@
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #a89888;
+  color: #4a7a4a;
 }
 
 .f-btn {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: 0.5px solid #c8bdb0;
+  border: 0.5px solid rgba(57, 255, 20, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -278,12 +285,13 @@
 }
 
 .contact-card:hover .f-btn {
-  background: #1a1410;
-  border-color: #1a1410;
+  background: var(--neon);
+  border-color: var(--neon);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
 }
 
 .contact-card:hover .f-btn svg {
-  stroke: #f4ede0;
+  stroke: #080c08;
 }
 
 /* Standard back */
@@ -296,21 +304,23 @@
   align-items: center;
   justify-content: center;
   gap: 13px;
-  border: 0.5px solid #272018;
+  border: 0.5px solid rgba(57, 255, 20, 0.15);
+  box-shadow: inset 0 0 30px rgba(57, 255, 20, 0.03);
 }
 
 .b-eye {
   font-size: 9px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: #3a3028;
+  color: #2e5a2e;
 }
 
 .b-icon {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 0.5px solid #322818;
+  border: 0.5px solid rgba(57, 255, 20, 0.2);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -321,7 +331,8 @@
   font-size: 18px;
   font-weight: 300;
   font-style: italic;
-  color: var(--gold);
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
   text-align: center;
   line-height: 1.45;
 }
@@ -334,10 +345,10 @@
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--neon);
   text-decoration: none;
   padding: 10px 20px;
-  border: 0.5px solid var(--gold-dim);
+  border: 0.5px solid var(--neon-dim);
   border-radius: 40px;
   margin-top: 4px;
   transition: background 0.2s, border-color 0.2s;
@@ -345,22 +356,23 @@
 }
 
 .b-cta:hover {
-  background: rgba(201, 169, 110, 0.08);
-  border-color: var(--gold);
+  background: rgba(57, 255, 20, 0.08);
+  border-color: var(--neon);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
 }
 
 .b-flip {
   font-size: 9px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #3a3028;
+  color: #2e5a2e;
   cursor: pointer;
   margin-top: 2px;
   transition: color 0.2s;
 }
 
 .b-flip:hover {
-  color: #7a6a58;
+  color: var(--neon);
 }
 
 /* Resume back — special layout */
@@ -370,7 +382,7 @@
   padding: 20px 20px 14px;
   display: flex;
   flex-direction: column;
-  border: 0.5px solid #272018;
+  border: 0.5px solid rgba(57, 255, 20, 0.15);
   justify-content: space-between;
   gap: 0;
 }
@@ -380,14 +392,14 @@
   align-items: center;
   gap: 12px;
   padding-bottom: 13px;
-  border-bottom: 0.5px solid #242018;
+  border-bottom: 0.5px solid rgba(57, 255, 20, 0.1);
 }
 
 .res-avatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 0.5px solid var(--gold-dim);
+  border: 0.5px solid var(--neon-dim);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -395,9 +407,9 @@
   font-size: 16px;
   font-weight: 300;
   font-style: italic;
-  color: var(--gold);
+  color: var(--neon);
   flex-shrink: 0;
-  background: #1e1810;
+  background: #0a1a0a;
 }
 
 .res-name {
@@ -413,13 +425,13 @@
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #5a4e40;
+  color: #3a6a3a;
   margin-top: 3px;
 }
 
 .res-stats {
   display: flex;
-  border-bottom: 0.5px solid #242018;
+  border-bottom: 0.5px solid rgba(57, 255, 20, 0.1);
   padding: 11px 0;
 }
 
@@ -432,14 +444,15 @@
 }
 
 .res-stat + .res-stat {
-  border-left: 0.5px solid #242018;
+  border-left: 0.5px solid rgba(57, 255, 20, 0.1);
 }
 
 .res-stat-n {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 22px;
   font-weight: 300;
-  color: var(--gold);
+  color: var(--neon);
+  text-shadow: 0 0 6px rgba(57, 255, 20, 0.3);
   line-height: 1;
 }
 
@@ -447,7 +460,7 @@
   font-size: 8px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #4a4030;
+  color: #2e5a2e;
 }
 
 .res-skills {
@@ -455,16 +468,16 @@
   flex-wrap: wrap;
   gap: 5px;
   padding: 11px 0;
-  border-bottom: 0.5px solid #242018;
+  border-bottom: 0.5px solid rgba(57, 255, 20, 0.1);
 }
 
 .res-sk {
   font-size: 8.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7a6a54;
+  color: #4a9a4a;
   padding: 3px 8px;
-  border: 0.5px solid #2e2618;
+  border: 0.5px solid rgba(57, 255, 20, 0.18);
   border-radius: 20px;
 }
 
@@ -473,8 +486,9 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  background: var(--gold);
-  color: #1a1410;
+  background: var(--neon);
+  color: #080c08;
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.3);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -505,7 +519,7 @@
   transform: translateX(-50%);
   width: 160px;
   height: 30px;
-  background: radial-gradient(ellipse, rgba(201, 169, 110, 0.13) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(57, 255, 20, 0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -516,8 +530,8 @@
   left: 40px;
   padding: 12px 24px;
   background: transparent;
-  border: 0.5px solid var(--gold-dim);
-  color: var(--gold);
+  border: 0.5px solid var(--neon-dim);
+  color: var(--neon);
   font-family: 'Outfit', sans-serif;
   font-size: 11px;
   letter-spacing: 0.2em;
@@ -532,8 +546,9 @@
 }
 
 .remarkable-back-btn:hover {
-  background: rgba(201, 169, 110, 0.05);
-  border-color: var(--gold);
+  background: rgba(57, 255, 20, 0.05);
+  border-color: var(--neon);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.15);
   transform: translateX(-5px);
 }
 
