@@ -141,10 +141,10 @@ const About = ({ onBack }) => {
     setRevealText('I');
     
     setTimeout(() => {
-      setRevealText('AM');
+      setRevealText('I AM');
       
       setTimeout(() => {
-        setRevealText('DEVELOPER');
+        setRevealText('I AM DEVELOPER');
         
         setTimeout(() => {
           setRevealText('');

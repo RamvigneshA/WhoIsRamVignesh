@@ -299,13 +299,13 @@
   height: 85vh; /* Slightly taller to ensure it feels anchored at bottom */
   max-width: 90vw;
   object-fit: contain;
-  filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.15));
+  filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.1)) brightness(0.9) saturate(0.6);
   will-change: transform, opacity;
   transition: filter 0.3s ease;
 }
 
 .snap-frame-img.snapping {
-  filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.3)) brightness(1.2);
+  filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.2)) brightness(9) saturate(0.35);
 }
 
 .flash-whiteout {
@@ -348,9 +348,10 @@
 /* Cinematic Word Reveal Styles */
 .snap-reveal-text-container {
   position: absolute;
-  top: 35%; 
+  top: 50%;
   left: 0;
   width: 100%;
+  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   z-index: 550;
@@ -358,24 +359,25 @@
 }
 
 .snap-reveal-text {
-  font-size: 10rem;
+  font-size: 8rem;
   color: #ffffff;
   margin: 0;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
   animation: textImpact 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  font-family: ui-monospace, Consolas, 'SF Mono', 'Roboto Mono', monospace;
+  font-family: 'Bruno Ace SC', ui-monospace, Consolas, 'SF Mono', 'Roboto Mono', monospace;
+  text-align: center;
 }
 
 .snap-reveal-text.developer {
-  font-size: 12rem;
+  font-size: 10rem;
   letter-spacing: 0.05em;
   background: linear-gradient(to bottom, #ffffff, #888888);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+
 }
 
 @keyframes textImpact {
