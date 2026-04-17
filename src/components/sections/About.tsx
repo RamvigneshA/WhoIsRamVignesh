@@ -27,7 +27,7 @@ import s5 from '../../assets/snap5.webp';
 import s6 from '../../assets/snap6.webp';
 
 const helmetImages = [h1, h2, h3, h4, h5, h6, h7];
-const stoneImages = [bStone, gStone, rStone, oStone, pStone, yStone, bStone]; // Blue, Green, Red, Orange, Purple, Yellow, Blue
+const stoneImages = [bStone, gStone, rStone, oStone, pStone, yStone, s1]; // Blue, Green, Red, Orange, Purple, Yellow, Snap
 const snapFrames = [s1, s2, s3, s4, s5, s6];
 
 const scenes = [
@@ -72,30 +72,29 @@ const About = ({ onBack }) => {
             const { scrollTop, scrollHeight, clientHeight } = sectionRef.current;
             const scrollFraction = scrollTop / (scrollHeight - clientHeight);
             
-            // Map scroll 0-1 to frame -1 to 6
-            const totalFrames = helmetImages.length;
-            // Introduce a small buffer so frame stays -1 for a few pixels
-            const rawIndex = Math.floor(scrollFraction * (totalFrames + 0.5)) - 1;
-            const frameIndex = Math.min(totalFrames - 1, Math.max(-1, rawIndex));
+            // 8 segments total: 1 Initial + 7 Scenes
+            // Plus an extra cushion for the snap zone
+            const totalSegments = scenes.length; 
+            const currentRaw = scrollFraction * totalSegments;
+            const clampedScene = Math.min(totalSegments - 1, Math.max(0, Math.floor(currentRaw)));
             
+            // Sync Timeline Index (0 = Initial Red Dot, 1-7 = Stones)
+            setActiveSceneIndex(clampedScene);
+            
+            // Sync Helmet pieces (0-6) mapped to clampedScene (1-7)
+            const frameIndex = clampedScene === 0 ? -1 : clampedScene - 1;
             setFrame(frameIndex);
-
-  const currentScene = Math.floor(scrollFraction * scenes.length);
-  const clampedScene = Math.min(scenes.length - 1, Math.max(0, currentScene));
-  
-  // Keep timeline at 7 dots, but handle snap in the 8th zone
-  setActiveSceneIndex(Math.min(6, clampedScene));
-
-  // Scroll-driven hand logic for the 8th zone
-  if (clampedScene === 7 && snapStageRef.current === 'idle') {
-    const zoneScroll = (scrollFraction * scenes.length) % 1;
-    setHandY(100 - zoneScroll * 100); // 100% to 0% (center of screen)
-    if (zoneScroll >= 0.98) {
-      triggerAutoSnap();
-    }
-  } else if (clampedScene < 7) {
-    setHandY(100);
-  }
+            
+            // Scroll-driven hand logic for the 8th zone (climax)
+            if (clampedScene === 7 && snapStageRef.current === 'idle') {
+              const zoneScroll = (scrollFraction * scenes.length) % 1;
+              setHandY(100 - zoneScroll * 100); // 100% to 0% (bottom of screen)
+              if (zoneScroll >= 0.98) {
+                triggerAutoSnap();
+              }
+            } else if (clampedScene < 7) {
+              setHandY(100);
+            }
           }
           ticking = false;
         });
@@ -181,11 +180,21 @@ const About = ({ onBack }) => {
       
       <div className="timeline-container">
         <div className="timeline-line"></div>
+        {/* Initial Red Dot Node */}
+        <button 
+          className={`timeline-node initial-node ${activeSceneIndex === 0 ? 'active' : ''}`}
+          onClick={() => scrollToScene(0)}
+          aria-label="Back to initial"
+        >
+          <div className="initial-dot"></div>
+        </button>
+
+        {/* Story Stone Nodes */}
         {scenes.slice(0, 7).map((_, index) => (
           <button 
             key={index} 
-            className={`timeline-node ${activeSceneIndex === index ? 'active' : ''} crystal-node-${index}`}
-            onClick={() => scrollToScene(index)}
+            className={`timeline-node ${activeSceneIndex === index + 1 ? 'active' : ''} crystal-node-${index}`}
+            onClick={() => scrollToScene(index + 1)}
             aria-label={`Go to scene ${index + 1}`}
           >
             <img src={stoneImages[index]} alt="" className="node-stone-img" />
