@@ -21,12 +21,35 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     { x: 9, y: -4, z: 27, rz: 4.2 }
   ];
 
-  const FAN = [
-    { x: -175, y: 22, z: 0, rz: -22 },
-    { x: -58, y: -8, z: 18, rz: -7 },
-    { x: 58, y: -8, z: 18, rz: 7 },
-    { x: 175, y: 22, z: 0, rz: 22 }
-  ];
+  const getFAN = () => {
+    const w = window.innerWidth;
+    if (w <= 380) return [
+      { x: -90, y: 16, z: 0, rz: -18 },
+      { x: -30, y: -6, z: 18, rz: -5 },
+      { x: 30, y: -6, z: 18, rz: 5 },
+      { x: 90, y: 16, z: 0, rz: 18 }
+    ];
+    if (w <= 600) return [
+      { x: -110, y: 18, z: 0, rz: -20 },
+      { x: -36, y: -7, z: 18, rz: -6 },
+      { x: 36, y: -7, z: 18, rz: 6 },
+      { x: 110, y: 18, z: 0, rz: 20 }
+    ];
+    if (w <= 900) return [
+      { x: -140, y: 20, z: 0, rz: -21 },
+      { x: -46, y: -8, z: 18, rz: -7 },
+      { x: 46, y: -8, z: 18, rz: 7 },
+      { x: 140, y: 20, z: 0, rz: 21 }
+    ];
+    return [
+      { x: -175, y: 22, z: 0, rz: -22 },
+      { x: -58, y: -8, z: 18, rz: -7 },
+      { x: 58, y: -8, z: 18, rz: 7 },
+      { x: 175, y: 22, z: 0, rz: 22 }
+    ];
+  };
+
+  const isTouchDevice = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   const applyTf = (i: number, base: any, lift: boolean, isFlipped: boolean) => {
     const card = cardsRef.current[i];
@@ -68,11 +91,13 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
 
     if (!arena || !cursor || !stack) return;
 
+    const isTouch = isTouchDevice();
     let tx = 0, ty = 0, ttx = 0, tty = 0, fa = 0;
     let isFannedRef = false;
     let flippedIdxRef: number | null = null;
 
     const updateTransforms = (liftIdx: number | null = null) => {
+      const FAN = getFAN();
       cards.forEach((card, i) => {
         if (!card) return;
         const config = isFannedRef ? FAN[i] : IDLE[i];
@@ -105,7 +130,15 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     };
     const animId = requestAnimationFrame(loop);
 
+    // Resize handler to recalculate fan positions
+    const onResize = () => {
+      if (isFannedRef) updateTransforms();
+    };
+    window.addEventListener('resize', onResize);
+
+    // --- Mouse events (desktop only) ---
     const onMouseEnterArena = () => {
+      if (isTouch) return;
       if (!isFannedRef && flippedIdxRef === null) {
         isFannedRef = true;
         setFanned(true);
@@ -115,6 +148,7 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     };
 
     const onMouseLeaveArena = () => {
+      if (isTouch) return;
       isFannedRef = false;
       setFanned(false);
       flippedIdxRef = null;
@@ -126,6 +160,7 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     };
 
     const onMouseMove = (e: MouseEvent) => {
+      if (isTouch) return;
       const r = arena.getBoundingClientRect();
       ttx = ((e.clientY - (r.top + r.height / 2)) / (r.height / 2)) * -5.5;
       tty = ((e.clientX - (r.left + r.width / 2)) / (r.width / 2)) * 8;
@@ -134,8 +169,8 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
       cursor.style.top = e.clientY + 'px';
     };
 
-    // Global cursor move for when not in arena
     const onGlobalMouseMove = (e: MouseEvent) => {
+      if (isTouch) return;
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     };
@@ -145,22 +180,40 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     arena.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mousemove', onGlobalMouseMove);
 
-    // Card events
+    // --- Touch events (mobile) ---
+    const onTouchArena = (e: TouchEvent) => {
+      if (!isTouch) return;
+      // If cards are not fanned, fan them
+      if (!isFannedRef && flippedIdxRef === null) {
+        isFannedRef = true;
+        setFanned(true);
+        updateTransforms();
+      }
+    };
+
+    arena.addEventListener('touchstart', onTouchArena, { passive: true });
+
+    // Card events (works for both mouse and touch)
+    const cardCleanups: (() => void)[] = [];
     cards.forEach((card, i) => {
       if (!card) return;
       
       const onMouseEnterCard = () => {
+        if (isTouch) return;
         if (!isFannedRef || flippedIdxRef !== null) return;
         updateTransforms(i);
       };
       
       const onMouseLeaveCard = () => {
+        if (isTouch) return;
         if (!isFannedRef || flippedIdxRef !== null) return;
         updateTransforms(null);
       };
       
-      const onClickCard = (e: MouseEvent) => {
-        if (!isFannedRef || flippedIdxRef !== null) return;
+      const onClickCard = (e: Event) => {
+        if (!isFannedRef) return;
+        if (flippedIdxRef !== null) return;
+        e.stopPropagation();
         flippedIdxRef = i;
         setFlipped(i);
         updateTransforms(i);
@@ -169,10 +222,15 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
       card.addEventListener('mouseenter', onMouseEnterCard);
       card.addEventListener('mouseleave', onMouseLeaveCard);
       card.addEventListener('click', onClickCard);
+
+      cardCleanups.push(() => {
+        card.removeEventListener('mouseenter', onMouseEnterCard);
+        card.removeEventListener('mouseleave', onMouseLeaveCard);
+        card.removeEventListener('click', onClickCard);
+      });
     });
 
-    // Flip back logic is handled via the button inside the card back
-    // We'll use event delegation or direct listeners on the flip buttons
+    // Flip back logic
     const flipButtons = document.querySelectorAll('.b-flip');
     const onFlipBack = (e: Event) => {
       e.stopPropagation();
@@ -182,12 +240,30 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     };
     flipButtons.forEach(btn => btn.addEventListener('click', onFlipBack));
 
+    // Touch outside to collapse on mobile
+    const onDocTouch = (e: TouchEvent) => {
+      if (!isTouch || !isFannedRef) return;
+      const target = e.target as HTMLElement;
+      if (!arena.contains(target)) {
+        isFannedRef = false;
+        setFanned(false);
+        flippedIdxRef = null;
+        setFlipped(null);
+        updateTransforms();
+      }
+    };
+    document.addEventListener('touchstart', onDocTouch, { passive: true });
+
     return () => {
       cancelAnimationFrame(animId);
+      window.removeEventListener('resize', onResize);
       arena.removeEventListener('mouseenter', onMouseEnterArena);
       arena.removeEventListener('mouseleave', onMouseLeaveArena);
       arena.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mousemove', onGlobalMouseMove);
+      arena.removeEventListener('touchstart', onTouchArena);
+      document.removeEventListener('touchstart', onDocTouch);
+      cardCleanups.forEach(fn => fn());
       flipButtons.forEach(btn => btn.removeEventListener('click', onFlipBack));
     };
   }, []);
