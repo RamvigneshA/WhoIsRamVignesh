@@ -69,14 +69,11 @@ const About = ({ onBack }) => {
       if (!ticking) {
         requestAnimationFrame(() => {
           if (sectionRef.current) {
-            const { scrollTop, scrollHeight, clientHeight } = sectionRef.current;
-            const scrollFraction = scrollTop / (scrollHeight - clientHeight);
+            const { scrollTop, clientHeight } = sectionRef.current;
             
-            // 8 segments total: 1 Initial + 7 Scenes
-            // Plus an extra cushion for the snap zone
-            const totalSegments = scenes.length; 
-            const currentRaw = scrollFraction * totalSegments;
-            const clampedScene = Math.min(totalSegments - 1, Math.max(0, Math.floor(currentRaw)));
+            // Precise index based on 100vh segments
+            const index = Math.max(0, scrollTop / clientHeight);
+            const clampedScene = Math.min(scenes.length - 1, Math.round(index));
             
             // Sync Timeline Index (0 = Initial Red Dot, 1-7 = Stones)
             setActiveSceneIndex(clampedScene);
@@ -86,13 +83,13 @@ const About = ({ onBack }) => {
             setFrame(frameIndex);
             
             // Scroll-driven hand logic for the 8th zone (climax)
-            if (clampedScene === 7 && snapStageRef.current === 'idle') {
-              const zoneScroll = (scrollFraction * scenes.length) % 1;
+            if (index > 6 && snapStageRef.current === 'idle') {
+              const zoneScroll = Math.min(1, Math.max(0, index - 6));
               setHandY(100 - zoneScroll * 100); // 100% to 0% (bottom of screen)
               if (zoneScroll >= 0.98) {
                 triggerAutoSnap();
               }
-            } else if (clampedScene < 7) {
+            } else if (index <= 6) {
               setHandY(100);
             }
           }
