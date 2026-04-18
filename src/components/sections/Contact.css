@@ -10,7 +10,7 @@
   --c-front: #0e1a0e;
   --c-dark: #0a120a;
 
-  background: var(--bg);
+  background: transparent;
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -29,9 +29,161 @@
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.045;
+  opacity: 0.02;
   pointer-events: none;
   z-index: 600;
+}
+
+/* ── Parallax Background ── */
+.parallax-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #2a4136 0%, #080c08 100%);
+  overflow: hidden;
+  z-index: 0;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.parallax-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes landscapeReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateY(30px);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes cloudReveal {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 0.8;
+    filter: blur(0);
+  }
+}
+
+/* Back layer — distant mountains/valley, furthest depth */
+.parallax-layer:nth-child(1) { z-index: 1; }
+.parallax-layer-back {
+  object-position: center bottom;
+  opacity: 0;
+  animation: landscapeReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Mid layer — rock pillar, middle depth */
+.parallax-layer:nth-child(2) { z-index: 3; }
+.parallax-layer-mid {
+  object-position: center center;
+  opacity: 0;
+  animation: landscapeReveal 2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+/* Front layer — foreground cliff/forest, closest */
+.parallax-layer:nth-child(3) { z-index: 4; }
+.parallax-layer-front {
+  object-position: center bottom;
+  opacity: 0;
+  animation: landscapeReveal 2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+/* Cloud layers — floating atmosphere */
+.parallax-layer:nth-child(4),
+.parallax-layer:nth-child(5) { z-index: 2; }
+
+.parallax-cloud {
+  object-fit: contain;
+  height: auto;
+  width: 45%;
+  min-width: 300px;
+  opacity: 0; /* Handled by cloudReveal */
+}
+
+.parallax-cloud-left {
+  top: 3%;
+  left: -3%;
+  bottom: auto;
+  right: auto;
+  animation: cloudReveal 2.5s ease-out 0.6s forwards, cloudDriftLeft 30s ease-in-out infinite alternate;
+}
+
+.parallax-cloud-right {
+  top: 8%;
+  right: -3%;
+  bottom: auto;
+  left: auto;
+  animation: cloudReveal 2.5s ease-out 0.8s forwards, cloudDriftRight 28s ease-in-out infinite alternate;
+}
+
+@keyframes cloudDriftLeft {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(30px) translateY(-10px); }
+}
+
+@keyframes cloudDriftRight {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(-25px) translateY(8px); }
+}
+
+/* Dark overlay — subtle vignette only */
+.parallax-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  opacity: 0;
+  animation: overlayReveal 2s ease-out 0.5s forwards;
+}
+
+@keyframes overlayReveal {
+  to { opacity: 1; }
+}
+
+/* Subtle neon horizon glow line */
+.parallax-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 22%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(57, 255, 20, 0.06) 20%, rgba(57, 255, 20, 0.12) 50%, rgba(57, 255, 20, 0.06) 80%, transparent 100%);
+  z-index: 6;
+  opacity: 0;
+  animation: scanPulse 4s ease-in-out 2s infinite;
+}
+
+@keyframes scanPulse {
+  0% { opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { opacity: 1; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; }
 }
 
 .ring {
@@ -40,6 +192,7 @@
   border: 0.5px solid rgba(57, 255, 20, 0.1);
   box-shadow: 0 0 30px rgba(57, 255, 20, 0.03);
   pointer-events: none;
+  z-index: 1;
 }
 
 #custom-cursor {
@@ -122,8 +275,9 @@
 
 .contact-copy {
   font-size: 13px;
-  font-weight: 300;
-  color: var(--muted);
+  font-weight: 400;
+  color: var(--neon);
+  /* text-shadow: 0 0 8px rgba(55, 255, 20, 0.629); */
   line-height: 1.95;
   max-width: 260px;
   margin-bottom: 44px;
@@ -135,7 +289,8 @@
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--neon);
+  /* text-shadow: 0 0 8px rgba(55, 255, 20, 0.629); */
   display: flex;
   align-items: center;
   gap: 10px;

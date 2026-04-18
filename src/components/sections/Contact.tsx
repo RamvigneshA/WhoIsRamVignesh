@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Contact.css';
 
+import frontLayer from '../../assets/frontLayer.webp';
+import frontLayer2nd from '../../assets/frontLayer2nd.webp';
+import frontLayer3rd from '../../assets/frontLayer3rd.webp';
+import cloudLeft from '../../assets/cloudLeft.webp';
+import cloudRight from '../../assets/cloudRight.webp';
+
 interface ContactProps {
   onBack: () => void;
 }
@@ -10,6 +16,7 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
   const stackRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const parallaxRef = useRef<HTMLDivElement>(null);
 
   const [fanned, setFanned] = useState(false);
   const [flipped, setFlipped] = useState<number | null>(null);
@@ -80,6 +87,77 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
     };
 
     // Let's refine the animation loop to use state correctly or refs
+  }, []);
+
+  // Parallax scroll and mouse effect
+  useEffect(() => {
+    const parallaxContainer = parallaxRef.current;
+    const contactSection = document.querySelector('.contact-remarkable');
+    if (!parallaxContainer || !contactSection) return;
+
+    const layers = parallaxContainer.querySelectorAll<HTMLElement>('.parallax-layer');
+    
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    let currentMouseX = 0;
+    let currentMouseY = 0;
+    let targetScrollProgress = 0;
+    let animId: number;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      targetMouseX = (e.clientX / innerWidth - 0.5) * 2; // -1 to 1
+      targetMouseY = (e.clientY / innerHeight - 0.5) * 2; // -1 to 1
+    };
+
+    const handleScroll = () => {
+      const rect = contactSection.getBoundingClientRect();
+      const sectionHeight = contactSection.clientHeight;
+      targetScrollProgress = -rect.top / sectionHeight;
+    };
+
+    const loop = () => {
+      // Smooth lerp mouse coordinates
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+
+      layers.forEach((layer) => {
+        const speed = parseFloat(layer.dataset.speed || '0');
+        const direction = layer.dataset.direction || 'vertical';
+        
+        // Mouse depth effect based on layer's speed mapping
+        const mouseOffsetX = currentMouseX * speed * -15; // Max 15px drift, inverted for depth
+        const mouseOffsetY = currentMouseY * speed * -10;
+        
+        if (direction === 'horizontal-left') {
+          const drift = targetScrollProgress * speed * 80;
+          layer.style.transform = `translate3d(${-drift + mouseOffsetX}px, ${mouseOffsetY}px, 0)`;
+        } else if (direction === 'horizontal-right') {
+          const drift = targetScrollProgress * speed * 80;
+          layer.style.transform = `translate3d(${drift + mouseOffsetX}px, ${mouseOffsetY}px, 0)`;
+        } else {
+          const yOffset = targetScrollProgress * speed * 100;
+          layer.style.transform = `translate3d(${mouseOffsetX}px, ${yOffset + mouseOffsetY}px, 0)`;
+        }
+      });
+      
+      animId = requestAnimationFrame(loop);
+    };
+
+    // Initial setup
+    handleScroll();
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    contactSection.addEventListener('scroll', handleScroll, { passive: true });
+    
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+      contactSection.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(animId);
+    };
   }, []);
 
   // I'll rewrite the logic more robustly for React
@@ -270,16 +348,33 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
 
   return (
     <div className="contact-remarkable">
+      {/* Parallax Background */}
+      <div className="parallax-bg" ref={parallaxRef}>
+        <div className="parallax-layer" data-speed="-1.2" data-direction="vertical">
+          <img src={frontLayer3rd} alt="" className="parallax-img parallax-layer-back" />
+        </div>
+        <div className="parallax-layer" data-speed="-0.6" data-direction="vertical">
+          <img src={frontLayer2nd} alt="" className="parallax-img parallax-layer-mid" />
+        </div>
+        <div className="parallax-layer" data-speed="-0.2" data-direction="vertical">
+          <img src={frontLayer} alt="" className="parallax-img parallax-layer-front" />
+        </div>
+        <div className="parallax-layer" data-speed="1.5" data-direction="horizontal-left">
+          <img src={cloudLeft} alt="" className="parallax-img parallax-cloud parallax-cloud-left" />
+        </div>
+        <div className="parallax-layer" data-speed="1.5" data-direction="horizontal-right">
+          <img src={cloudRight} alt="" className="parallax-img parallax-cloud parallax-cloud-right" />
+        </div>
+        <div className="parallax-overlay"></div>
+      </div>
+
       <div id="custom-cursor" ref={cursorRef}></div>
 
       <button className="remarkable-back-btn" onClick={onBack}>
         <span className="btn-arrow">←</span> Return
       </button>
 
-      <div className="ring" style={{ width: '700px', height: '700px', left: '-200px', top: '-200px' }}></div>
-      <div className="ring" style={{ width: '440px', height: '440px', right: '-80px', bottom: '-100px' }}></div>
-      <div className="ring" style={{ width: '210px', height: '210px', right: '31%', top: '21%' }}></div>
-      <div className="ring" style={{ width: '110px', height: '110px', left: '26%', bottom: '17%' }}></div>
+
 
       <div className="contact-page">
         <div className="contact-intro">
