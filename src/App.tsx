@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Hero from './components/sections/Hero'
 import Signaturecomp from './components/sections/signaturecomp'
 import About from './components/sections/About'
-import Work from './components/sections/Work'
+import Work from './components/sections/work/Work'
 import Projects from './components/sections/Projects'
 import Contact from './components/sections/Contact'
 
