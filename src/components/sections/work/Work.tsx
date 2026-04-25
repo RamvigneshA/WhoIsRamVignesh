@@ -6,6 +6,7 @@ import WorkNumbers from './WorkNumbers';
 import WorkAbout from './WorkAbout';
 import WorkSkills from './WorkSkills';
 import WorkProcess from './WorkProcess';
+import WorkNewHero from './WorkNewHero';
 
 const Work = ({ onBack }) => {
   const rootRef = useRef(null);
@@ -81,16 +82,56 @@ const Work = ({ onBack }) => {
     let rafId;
     const raf = () => {
       scrollY += (targetY - scrollY) * 0.09;
+      const H = window.innerHeight;
+      const heroRange = H * 4;
+      const heroProgress = Math.min(scrollY / heroRange, 1);
+
       parItems.forEach(({ el, speed }) => {
-        const rect = el.getBoundingClientRect();
-        // Calculation mapping scroll in container viewport.
-        // Bounding rect handles natural document flow relation to screen.
-        const center = (rect.top + rect.bottom) / 2;
-        const offset = (center - window.innerHeight / 2) * speed;
-        // Check if there is an existing transform format like translate()
-        // Wait, for hero elements, we override transform string manually later.
-        if (!el.classList.contains('hero-mouse-par')) {
-            el.style.transform = `translateY(${offset.toFixed(2)}px)`;
+        const isHeroEl = !!el.closest('.work-new-hero');
+        let offset = 0;
+
+        if (isHeroEl) {
+          // Virtual Parallax for sticky elements
+          offset = (heroProgress - 0.5) * H * speed * 2;
+        } else {
+          // Standard Coordinate Parallax
+          const rect = el.getBoundingClientRect();
+          const center = (rect.top + rect.bottom) / 2;
+          offset = (center - H / 2) * speed;
+        }
+
+        if (el.classList.contains('hp-layer')) {
+          let cinematicY = 0;
+          let cinematicX = 0;
+          let scale = 1;
+          
+          if (el.classList.contains('layer-mountain')) {
+            scale = 1.3 - (heroProgress * 0.25);
+            offset = 0; // Pinned
+          }
+          if (el.classList.contains('layer-bg')) {
+            cinematicY = (1 - heroProgress) * 200;
+          }
+          if (el.classList.contains('layer-cave-interior') || el.classList.contains('layer-man')) {
+            cinematicY = (1 - heroProgress) * 600;
+          }
+          if (el.classList.contains('layer-cave-left')) {
+            cinematicX = (1 - heroProgress) * -800;
+            cinematicY = (1 - heroProgress) * -600;
+            scale = 1.4 - (heroProgress * 0.4); 
+          }
+          if (el.classList.contains('layer-cave-right')) {
+            cinematicX = (1 - heroProgress) * 800;
+            cinematicY = (1 - heroProgress) * -600;
+            scale = 1.4 - (heroProgress * 0.4); 
+          }
+          
+          el.style.transform = `translate(${cinematicX.toFixed(2)}px, ${(offset + cinematicY).toFixed(2)}px) scale(${scale.toFixed(3)})`;
+        } else if (el.classList.contains('h-pin')) {
+          el.style.transform = `translateY(${offset.toFixed(2)}px)`;
+          el.style.opacity = (1 - heroProgress).toString();
+        } else if (!el.classList.contains('hero-mouse-par')) {
+          el.style.transform = `translateY(${offset.toFixed(2)}px)`;
         }
       });
       rafId = requestAnimationFrame(raf);
@@ -116,26 +157,78 @@ const Work = ({ onBack }) => {
       const ny = (e.clientY / H - 0.5) * 2;
       
       const scrollY = root.scrollTop;
+      const heroRange = H * 4;
+      const heroProgress = Math.min(scrollY / heroRange, 1);
       
-      const heroOrb = hero.querySelector('.hero-orb');
-      const heroCircle = hero.querySelector('.hero-circle3');
-      const heroWord = hero.querySelector('.hero-bigword');
+      // 1. Cinematic HP Layers
+      const imageLayers = hero.querySelectorAll('.hp-layer');
+      imageLayers.forEach(layer => {
+        const speed = parseFloat(layer.dataset.speed || '0');
+        let virtualBaseOffset = (heroProgress - 0.5) * H * speed * 2;
+        
+        let cinematicY = 0;
+        let cinematicX = 0;
+        let scale = 1;
+        
+        if (layer.classList.contains('layer-mountain')) {
+          scale = 1.3 - (heroProgress * 0.25);
+          virtualBaseOffset = 0;
+        }
+        if (layer.classList.contains('layer-bg')) {
+          cinematicY = (1 - heroProgress) * 200;
+        }
+        if (layer.classList.contains('layer-cave-interior') || layer.classList.contains('layer-man')) {
+          cinematicY = (1 - heroProgress) * 600;
+        }
+        if (layer.classList.contains('layer-cave-left')) {
+          cinematicX = (1 - heroProgress) * -800;
+          cinematicY = (1 - heroProgress) * -600;
+          scale = 1.4 - (heroProgress * 0.4);
+        }
+        if (layer.classList.contains('layer-cave-right')) {
+          cinematicX = (1 - heroProgress) * 800;
+          cinematicY = (1 - heroProgress) * -600;
+          scale = 1.4 - (heroProgress * 0.4);
+        }
+        
+        const mx = nx * (speed * 18);
+        const my = ny * (speed * 12);
+        
+        layer.style.transform = `translate(${(mx + cinematicX).toFixed(1)}px, ${(my + virtualBaseOffset + cinematicY).toFixed(1)}px) scale(${scale.toFixed(3)})`;
+        layer.classList.add('hero-mouse-par');
+      });
 
-      if (heroOrb) {
-        const baseOffset = heroOrb.dataset.speed * (scrollY + hero.getBoundingClientRect().height / 2 - H / 2);
-        heroOrb.style.transform = `translateY(${baseOffset.toFixed(1)}px) translate(${nx * -22}px, ${ny * -16}px)`;
-        heroOrb.classList.add('hero-mouse-par');
-      }
-      
-      if (heroCircle) {
-        heroCircle.style.transform = `translateY(0) translate(${nx * 30}px, ${ny * 24}px)`;
-        heroCircle.classList.add('hero-mouse-par');
-      }
-      
-      if (heroWord) {
-        heroWord.style.transform = `translate(calc(-50% + ${nx * 14}px), calc(-48% + ${ny * 10}px))`;
-        heroWord.classList.add('hero-mouse-par');
-      }
+      // 2. Pinned elements (h-pin)
+      const pinElements = hero.querySelectorAll('.h-pin');
+      pinElements.forEach(el => {
+        const speed = parseFloat(el.dataset.speed || '0');
+        const virtualBaseOffset = (heroProgress - 0.5) * H * speed * 2;
+        const mx = nx * (speed * 18);
+        const my = ny * (speed * 12);
+        
+        el.style.transform = `translateY(${virtualBaseOffset.toFixed(1)}px) translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)`;
+        el.style.opacity = (1 - heroProgress).toString();
+        el.classList.add('hero-mouse-par');
+      });
+
+      // 3. Simple Parallax Elements (Orbs, Circles, Bigword)
+      const parEls = hero.querySelectorAll('.p-el:not(.hp-layer):not(.h-pin)');
+      parEls.forEach(el => {
+        const speed = parseFloat(el.dataset.speed || '0');
+        const rect = el.getBoundingClientRect();
+        const center = (rect.top + rect.bottom) / 2;
+        const scrollOffset = (center - H / 2) * speed;
+        
+        const mx = nx * (Math.abs(speed) * 30);
+        const my = ny * (Math.abs(speed) * 20);
+
+        if (el.classList.contains('hero-bigword')) {
+          el.style.transform = `translate(calc(-50% + ${mx}px), calc(-48% + ${my + scrollOffset}px))`;
+        } else {
+          el.style.transform = `translateY(${scrollOffset.toFixed(1)}px) translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)`;
+        }
+        el.classList.add('hero-mouse-par');
+      });
     };
 
     hero.addEventListener('mousemove', handleMouseMove);
@@ -215,7 +308,7 @@ const Work = ({ onBack }) => {
       </button>
 
       {/* ══════════════════════ HERO ══════════════════════ */}
-      <WorkHero ref={heroRef} />
+      <WorkNewHero />
       <WorkMarquee />
       <WorkNumbers />
       <WorkAbout />

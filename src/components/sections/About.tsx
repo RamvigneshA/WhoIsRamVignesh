@@ -215,10 +215,14 @@ const About = ({ onBack }) => {
 
       <div className="scenes-container">
         {scenes.map((text, index) => (
-          <div key={index} className={`about-scene scene-${index + 1}`}>
+          <div key={index} className={`about-scene scene-${index + 1} ${activeSceneIndex === index ? 'active' : ''}`}>
             <div className="scene-content">
               {text.split('\n').map((line, i) => (
-                <h2 key={i} className="scene-text-line">
+                <h2 
+                  key={i} 
+                  className="scene-text-line"
+                  style={{ '--line-index': i }}
+                >
                   {line.split(/(\*.*?\*)/g).map((part, index) => {
                     if (part.startsWith('*') && part.endsWith('*')) {
                       return (

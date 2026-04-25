@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import Hero3DText from './Hero3DText';
 
 const WorkHero = forwardRef<HTMLElement>((props, ref) => (
   <section id="hero" ref={ref}>
@@ -27,11 +28,7 @@ const WorkHero = forwardRef<HTMLElement>((props, ref) => (
     </div>
 
     <div className="hero-content">
-      <h1 className="hero-h1">
-        Crafting<br />
-        <em>interfaces</em><br />
-        that scale.
-      </h1>
+      <Hero3DText />
     </div>
 
     <div className="scroll-hint">
