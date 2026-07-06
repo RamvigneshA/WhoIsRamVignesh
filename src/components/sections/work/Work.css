@@ -1083,9 +1083,179 @@
 
 
 
-.work-new-hero {
+/* ═══════════════════════════════════════════════════════════
+   CINEMATIC MOUNTAIN HERO
+   ═══════════════════════════════════════════════════════════ */
+
+/*  Outer wrapper — tall enough to give 2 screens of scroll   */
+.cinematic-hero-wrapper {
+  position: relative;
+  height: 300vh;           /* 2× scroll distance + 1 screen of canvas — matches SCROLL_MULTIPLIER in JS */
   width: 100%;
+}
 
-  background: #69c1d7;
+/*  Sticky canvas — stays fixed to viewport during the scroll  */
+.cinematic-canvas {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #4fa8e0 0%, #7ec4ea 55%, #bfe2f4 100%); /* clear sky blue */
+  isolation: isolate;
+}
 
+/* ── All layer images share these base traits ── */
+.cin-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  /* Start invisible; JS drives opacity in */
+  opacity: 0;
+}
+
+/* ── z-index stacking (back → front) ── */
+
+/* Mountain — main focal element */
+.cin-mountain {
+  z-index: 2;
+  object-position: center 60%;   /* show peaks prominently */
+  transform-origin: center 60%;
+}
+
+/* Cave interior rocky floor */
+.cin-interior {
+  z-index: 3;
+  object-position: center bottom;
+  transform-origin: center bottom;
+}
+
+/* Man silhouette — bottom center, small figure */
+.cin-man {
+  z-index: 4;
+  /* Constrain to a natural human size relative to the scene */
+  object-fit: contain;
+  object-position: 38% bottom;   /* position left of center like original asset */
+  width: 100%;
+  height: 100%;
+  transform-origin: center bottom;
+}
+
+/* Cave top arch — hangs from the very top */
+.cin-cave-top {
+  z-index: 5;
+  object-position: top center;
+  transform-origin: top center;
+  /* The asset's content is in the top portion, so we want it to drape down */
+  height: 100%;
+  /* Dark cave-rock tone instead of the source image's bright/odd look */
+  filter: brightness(0.42) contrast(1.2) saturate(0.7);
+}
+
+/* Cave left rock — anchored to top-left corner */
+.cin-cave-left {
+  z-index: 6;
+  object-fit: contain;
+  object-position: top left;
+  width: 38%;
+  height: 55%;
+  left: 0;
+  top: 0;
+  transform-origin: top left;
+  filter: brightness(0.4) contrast(1.2) saturate(0.7);
+}
+
+/* Cave right rock — anchored to top-right corner */
+.cin-cave-right {
+  z-index: 6;
+  object-fit: contain;
+  object-position: top right;
+  width: 62%;
+  height: 55%;
+  left: auto;
+  right: 0;
+  top: 0;
+  transform-origin: top right;
+  filter: brightness(0.4) contrast(1.2) saturate(0.7);
+}
+
+/* Dark overlay for cinematic fade-out */
+.cin-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Cinematic quote ── */
+/* Cinematic quote styles */
+.cin-quote {
+  position: absolute;
+  top: 100px; /* Adjust vertical position */
+  right: 100px; /* Adjust horizontal position */
+  text-align: right;
+  z-index: 9;
+  pointer-events: none;
+  will-change: transform, opacity;
+  opacity: 0;
+  max-width: 800px; /* Increase width for larger space */
+  padding: 0;
+}
+
+.cin-quote-line {
+  margin: 0;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 700; /* Make the text bold */
+  font-size: clamp(32px, 5vw, 64px); /* Larger font size */
+  line-height: 1.2; /* Adjust line height for better spacing */
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.94); /* White color */
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow for emphasis */
+}
+
+.cin-quote-em {
+  font-style: italic;
+  font-weight: 700; /* Bold italic for emphasis */
+  color: rgba(255, 255, 255, 0.94); /* White color */
+}
+/* ── Scroll hint ── */
+.cin-scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.cin-scroll-line {
+  width: 1px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.35);
+  animation: cin-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes cin-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.2); }
 }
