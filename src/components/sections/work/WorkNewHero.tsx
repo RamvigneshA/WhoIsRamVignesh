@@ -181,7 +181,11 @@ const WorkNewHero = () => {
     <div className="cinematic-hero-wrapper" ref={sectionRef}>
       {/* The sticky canvas that stays fixed while user scrolls through */}
       <div className="cinematic-canvas">
-
+{/* Scroll indicator */}
+<div className="scroll-indicator">
+  <span className="scroll-indicator-line"></span>
+  <span className="scroll-indicator-text">Scroll</span>
+</div>
         {/* z-1: Majestic snowy mountain */}
         <img
           ref={mountainRef}
@@ -246,10 +250,10 @@ const WorkNewHero = () => {
         <div ref={overlayRef} className="cin-overlay" />
 
         {/* Scroll prompt */}
-        <div ref={labelRef} className="cin-scroll-hint">
+        {/* <div ref={labelRef} className="cin-scroll-hint">
           <div className="cin-scroll-line" />
           <span>scroll</span>
-        </div>
+        </div> */}
 
       </div>
     </div>

@@ -1259,3 +1259,56 @@
   0%, 100% { opacity: 0.3; transform: scaleY(1); }
   50%       { opacity: 1;   transform: scaleY(1.2); }
 }
+/* Improved Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 50px; /* Slightly higher for better visibility */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.scroll-indicator-line {
+  width: 4px; /* Thicker line for better visibility */
+  height: 50px; /* Taller line */
+  background: rgba(255, 255, 255, 0.8); /* Brighter white */
+  border-radius: 2px; /* Rounded edges */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Glow effect */
+  animation: scroll-pulse 1.2s infinite ease-in-out; /* Faster animation */
+}
+
+.scroll-indicator-text {
+  margin-top: 12px; /* More spacing from the line */
+  font-family: 'DM Mono', monospace;
+  font-size: 14px; /* Larger text */
+  color: rgba(255, 255, 255, 1); /* Brighter white */
+  letter-spacing: 0.15em; /* Slightly more spacing */
+  text-transform: uppercase;
+  animation: fade-in 1.2s infinite ease-in-out; /* Sync with line animation */
+}
+
+/* Scroll line animation */
+@keyframes scroll-pulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(12px); /* Larger movement */
+    opacity: 0.6; /* Slightly dimmer at the peak */
+  }
+}
+
+/* Fade-in animation for text */
+@keyframes fade-in {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7; /* Slightly dimmer at the peak */
+  }
+}
