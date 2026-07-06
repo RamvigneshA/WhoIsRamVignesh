@@ -21,6 +21,7 @@ const Hero = ({ onNavigate }) => {
   const [isDragging, setIsDragging] = useState(false)
   const [activeCorner, setActiveCorner] = useState(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [hasInteracted, setHasInteracted] = useState(false)
   const dragStart = useRef({ x: 0, y: 0 })
 
   const updateAngles = useCallback(() => {
@@ -54,6 +55,7 @@ const Hero = ({ onNavigate }) => {
   // Combined Drag Start
   const handleStart = (clientX, clientY) => {
     setIsDragging(true)
+    setHasInteracted(true)
     dragStart.current = {
       x: clientX - pos.x,
       y: clientY - pos.y
@@ -244,6 +246,18 @@ const Hero = ({ onNavigate }) => {
                 objectFit: 'contain'
               }} 
             />
+
+            {/* Drag-to-navigate affordance: a rotating dashed orbit with a
+                comet-trail cursor looping around the character, teaching the
+                "grab and drag" gesture without relying on static text/emoji.
+                Stays mounted and fades out on its own transition (rather than
+                unmounting) so the exit reads as smooth, not a hard cut. */}
+          {/* filepath: /Users/gokulnatha/Desktop/protfolio/src/components/sections/Hero.tsx */}
+<div className="drag-indicator" aria-hidden="true">
+  <span className="drag-ring drag-ring--outer" />
+  <span className="drag-ring drag-ring--inner" />
+  <span className="drag-indicator-label">drag & place me to answer</span>
+</div>
           </div>
         </div>
 
