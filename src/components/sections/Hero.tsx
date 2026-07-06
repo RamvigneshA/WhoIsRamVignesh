@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import myImg from '../../assets/myimg.webp'
+import myImg from '../../assets/myImg.webp'
 import pointingFinger from '../../assets/pointingFinger.png'
 import SoftAurora from '../SoftAurora'
 import { gsap } from 'gsap'
