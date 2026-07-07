@@ -1,5 +1,7 @@
 import React from 'react';
 import SoftAurora from '../SoftAurora';
+import carImage from '../../assets/carpart.png'
+import codeEditor from '../../assets/ai-code-orchestrator.png'
 
 const Projects = ({ onBack }) => {
   const projects = [
@@ -10,7 +12,7 @@ const Projects = ({ onBack }) => {
       accent: "#34d399",
       description: "An interactive React component library for selecting and capturing car parts from an SVG diagram. Includes full i18n support.",
       link: "https://car-part-seletor-website.vercel.app/",
-      image: "src/assets/carpart.png" // Replace with the actual image path
+      image: carImage// Replace with the actual image path
     },
     {
       title: "CodeOrchestrator",
@@ -19,7 +21,7 @@ const Projects = ({ onBack }) => {
       accent: "#ff6b6b",
       description: "CodeOrchestrator is an AI-powered editor, It generates structured actions executed through a controlled tool layer.",
       link: "https://github.com/RamvigneshA/ai-code-orchestrator", // Replace with the actual link
-      image: "src/assets/Hero Preview from ai-code-orchestrator.png" // Replace with the actual image path
+      image:codeEditor // Replace with the actual image path
     },
     { title: "Fluid UI", category: "Design System", year: "2023", accent: "#60a5fa" }
   ];
