@@ -470,7 +470,7 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
                     <path d="M6.5 9.5v5M6.5 7v.01M10.5 14.5v-3a2 2 0 014 0v3M10.5 9.5v5" />
                   </svg>
                 </div>
-                <div className="b-val">/in/yourhandle</div>
+                <div className="b-val">in/ram-vignesh2608</div>
                 <a href="https://www.linkedin.com/in/ram-vignesh2608/" target="_blank" rel="noopener noreferrer" className="b-cta">
                   View profile
                   <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M1 4.5h7M4.5 1l3.5 3.5L4.5 8" /></svg>
