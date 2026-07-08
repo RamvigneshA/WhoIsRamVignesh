@@ -2,6 +2,7 @@ import React from 'react';
 import SoftAurora from '../SoftAurora';
 import carImage from '../../assets/carpart.png'
 import codeEditor from '../../assets/ai-code-orchestrator.png'
+import onboardpng from '../../assets/onboard.png'
 
 const Projects = ({ onBack }) => {
   const projects = [
@@ -14,6 +15,15 @@ const Projects = ({ onBack }) => {
       link: "https://car-part-seletor-website.vercel.app/",
       image: carImage// Replace with the actual image path
     },
+    { 
+      title: "Onboard-Map CLI", 
+      category: "CLI Tool", 
+      year: "2026", 
+      accent: "#f97316",
+      description: "A CLI tool that generates topological reading pathways and identifies risk hotspots for staff architects in repositories.",
+      link: "https://onboard-map-website.vercel.app/", // Replace with the actual link
+      image: onboardpng // Replace with the actual image path
+    },
     {
       title: "CodeOrchestrator",
       category: "AI-Powered Editor",
@@ -23,7 +33,6 @@ const Projects = ({ onBack }) => {
       link: "https://github.com/RamvigneshA/ai-code-orchestrator", // Replace with the actual link
       image:codeEditor // Replace with the actual image path
     },
-    { title: "Fluid UI", category: "Design System", year: "2023", accent: "#60a5fa" }
   ];
 
   return (
