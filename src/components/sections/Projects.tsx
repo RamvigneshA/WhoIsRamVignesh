@@ -3,6 +3,7 @@ import SoftAurora from '../SoftAurora';
 import carImage from '../../assets/carpart.png'
 import codeEditor from '../../assets/ai-code-orchestrator.png'
 import onboardpng from '../../assets/onboard.png'
+import storeup from '../../assets/storeup.png'
 
 const Projects = ({ onBack }) => {
   const projects = [
@@ -33,6 +34,15 @@ const Projects = ({ onBack }) => {
       link: "https://github.com/RamvigneshA/ai-code-orchestrator", // Replace with the actual link
       image:codeEditor // Replace with the actual image path
     },
+    { 
+      title: "Cloud Storage Solution", 
+      category: "Web Application", 
+      year: "2026", 
+      accent: "#3b82f6",
+      description: "A cloud storage solution for managing and storing your files securely. Built with Next.js and integrated with cloud services.",
+      link: "https://nextjs-drive-store.vercel.app/sign-in", // Replace with the actual link
+      image: storeup
+    }
   ];
 
   return (
