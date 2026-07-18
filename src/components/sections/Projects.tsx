@@ -41,7 +41,7 @@ const Projects = ({ onBack }) => {
       accent: "#3b82f6",
       description: "A cloud storage solution for managing and storing your files securely. Built with Next.js and integrated with cloud services.",
       link: "https://nextjs-drive-store.vercel.app/sign-in", // Replace with the actual link
-      image: storeup
+      image: "https://via.placeholder.com/300x200.png?text=Cloud+Storage" // Replace with the actual image path
     }
   ];
 

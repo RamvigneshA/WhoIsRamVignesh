@@ -520,7 +520,7 @@ const Contact: React.FC<ContactProps> = ({ onBack }) => {
                   <span className="res-sk">Node.js</span>
                   <span className="res-sk">TypeScript</span>
                 </div>
-                <a href="resume.pdf" download="YourName_Resume.pdf" className="res-dl">
+                <a href="/RamResume.pdf" download="RamVignesh_Resume.pdf"  className="res-dl">
                   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#080c08" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 1.5v7M3.5 6l3 3 3-3M2 11h9" /></svg>
                   Download Résumé
                 </a>
